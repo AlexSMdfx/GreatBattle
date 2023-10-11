@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class Player extends Creature {
     private int healthPotion = 4;
-    private int maxHealth = getHealth();
-    private Player PLAYER;
+    private int maxHealth;
 
+    private Player PLAYER;
     public Player createPlayer () {
         if (PLAYER == null) {
             PLAYER = new Player();
@@ -24,6 +24,7 @@ public class Player extends Creature {
         setAttack(random.nextInt(30) + 1);
         setDefence(random.nextInt(30) + 1);
         setHealth(random.nextInt(100) + 30);
+        maxHealth = getHealth();
         setWeapon(Weapon.KNIFE);
 
         return PLAYER;
@@ -34,10 +35,11 @@ public class Player extends Creature {
             System.out.println("Зелья лечения кончились");
             return;
         }
-        if((getHealth() + (int)(maxHealth * 0.3)) > maxHealth) {
+        int newHealth = getHealth() + (int)(maxHealth * 0.3);
+        if(newHealth > maxHealth) {
             setHealth(maxHealth);
         } else {
-            setHealth(getHealth() + (int)(maxHealth * 0.3));
+            setHealth(newHealth);
         }
         healthPotion--;
     }
@@ -53,4 +55,8 @@ public class Player extends Creature {
                 "урон - (" + getWeapon().minDamage + " - " + getWeapon().maxDamage + ")\n\n";
     }
 
+
+    public int getHealthPotion() {
+        return healthPotion;
+    }
 }
